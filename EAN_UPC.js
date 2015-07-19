@@ -1,5 +1,20 @@
 function EAN(EANnumber){
 
+	// make sure we treat this as a string; not a number
+	EANnumber += "";
+
+	// tolerate any spaces (just strip them out)
+	EANnumber = EANnumber.replace(/\s/g, "")
+
+	// if the barcode doesn't have a valid number system, add one now
+	if (EANnumber.length === 11) 
+		EANnumber = "0" + EANnumber;
+
+	// if the barcode doesn't have a check digit, add one now.
+	if (EANnumber.length === 12) 
+		EANnumber += checksum(EANnumber);
+
+
 	this.EANnumber = EANnumber+"";
 
 	this.valid = function(){
